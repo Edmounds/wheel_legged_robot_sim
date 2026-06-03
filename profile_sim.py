@@ -15,14 +15,14 @@ sys.path.insert(0, str(ROOT))
 
 import mujoco
 
-from sim.controllers.combined import CombinedController
-from sim.controllers.default_params import STAND_PARAMS
-from sim.model_xml import prepare_controlled_mujoco_xml
-from sim.state import extract_sim_state
+from src.controllers.combined import CombinedController
+from src.controllers.default_params import STAND_PARAMS
+from src.mjcf_builder import prepare_controlled_mujoco_xml
+from src.state import extract_sim_state
 
 
 def setup():
-    xml = prepare_controlled_mujoco_xml(Path('sim/robot/robot.urdf'))
+    xml = prepare_controlled_mujoco_xml(Path('src/robot/robot.urdf'))
     model = mujoco.MjModel.from_xml_path(str(xml))
     data = mujoco.MjData(model)
     stand_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_KEY, 'stand')

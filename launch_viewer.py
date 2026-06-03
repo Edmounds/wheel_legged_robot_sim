@@ -16,14 +16,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import mujoco
 import mujoco.viewer
 
-from sim.mujoco_mesh_preprocess import prepare_mujoco_xml
+from src.mujoco_mesh_preprocess import prepare_mujoco_xml
 
 LEG_MOTOR_JOINTS = ("base_link_旋转-2", "base_link_旋转-1")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Launch MuJoCo viewer for URDF testing.")
-    parser.add_argument("--urdf", type=Path, default=Path("sim/robot/robot.urdf"))
+    parser.add_argument("--urdf", type=Path, default=Path("src/robot/robot.urdf"))
     args = parser.parse_args()
 
     urdf_path = args.urdf.resolve()
@@ -32,7 +32,7 @@ def main():
         sys.exit(1)
 
     # Load URDF via MuJoCo (handles oversized mesh splitting) and preprocess
-    from sim.model_xml import _urdf_to_mjcf, _ensure_equality_constraints, _configure_geom_collisions, _apply_link_materials
+    from src.mjcf_builder import _urdf_to_mjcf, _ensure_equality_constraints, _configure_geom_collisions, _apply_link_materials
     tmp_dir = Path(tempfile.mkdtemp())
     converted_xml = _urdf_to_mjcf(urdf_path, tmp_dir)
 

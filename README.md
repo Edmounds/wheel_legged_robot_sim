@@ -30,20 +30,20 @@ uv sync
 
 ```bash
 # macOS
-uv run mjpython -m sim.launch_mujoco
+uv run mjpython -m src.launch_mujoco
 # Linux / Windows
-uv run python -m sim.launch_mujoco
+uv run python -m src.launch_mujoco
 ```
 
 常用参数：
 
 ```bash
 # 跳跃场景
-uv run mjpython -m sim.launch_mujoco --scenario jump
+uv run mjpython -m src.launch_mujoco --scenario jump
 # 切换控制器：zero / vmc / lqr_vmc / combined
-uv run mjpython -m sim.launch_mujoco --controller combined
+uv run mjpython -m src.launch_mujoco --controller combined
 # 关闭默认的单轮斜坡地形，使用平地
-uv run mjpython -m sim.launch_mujoco --flat-ground
+uv run mjpython -m src.launch_mujoco --flat-ground
 ```
 
 场景可选 `stand`（站立）、`jump`（跳跃）、`drive`（行进）、`fall_recover`（摔倒自恢复）。
@@ -64,27 +64,18 @@ uv sync --extra gamepad
 
 手柄默认启用，左摇杆 + LT/RT 控制行进与跳跃；未安装手柄依赖时会自动跳过，不影响仿真。要显式关闭用 `--no-enable-gamepad`。
 
-## 测试
-
-测试需在仓库根目录运行（用例按相对路径加载 `sim/robot/robot.urdf`）：
-
-```bash
-uv run pytest -q
-```
-
 ## 项目结构
 
 ```
-sim/
+src/
   controllers/     # LQR、VMC、相位机、跳跃轨迹、参数与 LUT
   robot/           # robot.urdf + STL 网格
   launch_mujoco.py # 带控制器的仿真入口
-  model_xml.py     # URDF → MJCF 转换与预处理
+  mjcf_builder.py  # URDF → MJCF 转换与预处理
   rollout.py       # 无头 rollout
   optimize.py      # Optuna 调参
-scripts/           # 调参、验证、诊断等工具脚本
-tests/             # pytest 用例
 launch_viewer.py   # 纯 URDF 查看器
+profile_sim.py     # 性能分析
 ```
 
 ## 许可证

@@ -21,15 +21,6 @@ gamepad = [
     "hidapi>=0.15.0",
     "pyobjc-framework-GameController>=10.0",
 ]
-# Offline mesh decimation tooling (scripts/decimate_base_link.py).
-mesh = [
-    "pymeshlab>=2025.7",
-]
-# Video rendering helpers (scripts/record_lqr.py, scripts/render_success.py).
-viz = [
-    "mediapy>=1.2",
-    "opencv-python>=4.10",
-]
 
 [project.urls]
 Repository = "https://github.com/Edmounds/wheel_legged_robot_sim"
@@ -39,18 +30,10 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["sim"]
-
-[dependency-groups]
-dev = [
-    "pytest>=8.0",
-]
-
-[tool.pytest.ini_options]
-pythonpath = ["."]
+packages = ["src"]
 
 [tool.pyright]
-include = ["sim", "scripts", "tests"]
+include = ["src"]
 extraPaths = ["."]
 venvPath = "."
 venv = ".venv"
