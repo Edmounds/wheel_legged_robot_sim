@@ -12,7 +12,7 @@
 
 跳跃是一台相位机：`STAND → CROUCH → EXTEND → FLIGHT → LAND`，摔倒了进 `FALLEN`。STAND 时 LQR 全开、VMC 管高度；CROUCH、EXTEND、LAND 期间 LQR 只靠轮前进和 yaw 稳住本体，腿整个交给 VMC 轨迹；FLIGHT 把腿和轮都置零，靠角动量在空中保持姿态，这样落地不会反扭。
 
-参数和调参顺序都集中在 `sim/controllers/default_params.py`，注释里写了该从哪项开始、按什么顺序往下冻结。
+参数和调参顺序都集中在 `src/controllers/default_params.py`，注释里写了该从哪项开始、按什么顺序往下冻结。
 
 ## 环境搭建
 
@@ -26,7 +26,7 @@ uv sync
 
 ## 快速开始
 
-启动带控制器的仿真（默认 `lqr_vmc` 控制器、`stand` 场景）：
+一般只需要直接启动带控制器的仿真：
 
 ```bash
 # macOS
@@ -35,20 +35,9 @@ uv run mjpython -m src.launch_mujoco
 uv run python -m src.launch_mujoco
 ```
 
-常用参数：
+默认启动后就会加载机器人、地形和控制器。手柄接上以后可以直接控制行进和跳跃；没有手柄时也能正常打开仿真。
 
-```bash
-# 跳跃场景
-uv run mjpython -m src.launch_mujoco --scenario jump
-# 切换控制器：zero / vmc / lqr_vmc / combined
-uv run mjpython -m src.launch_mujoco --controller combined
-# 关闭默认的单轮斜坡地形，使用平地
-uv run mjpython -m src.launch_mujoco --flat-ground
-```
-
-场景可选 `stand`（站立）、`jump`（跳跃）、`drive`（行进）、`fall_recover`（摔倒自恢复）。
-
-只看 URDF 模型本身（无控制器）：
+如果只想看 URDF 模型本身，不加载控制器，可以运行：
 
 ```bash
 uv run mjpython launch_viewer.py
